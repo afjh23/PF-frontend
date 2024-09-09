@@ -1,10 +1,12 @@
 import { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { IncidenciaContext } from '../context/IncidenciaContext'
 import { AuthContext } from '../context/AuthContext'
 
 export const AllIncidencias = () => {
-    const { incidencias, isLoading, isError, editarIncidenciaExistente, eliminarIncidenciaExistente, mensaje } = useContext(IncidenciaContext)
+    const { incidencias, isLoading, isError, editarIncidenciaExistente, mensaje } = useContext(IncidenciaContext)
     const { user } = useContext(AuthContext)
+    const navigate = useNavigate()
 
     const [editando, setEditando] = useState(null)
     const [formData, setFormData] = useState({
@@ -14,19 +16,15 @@ export const AllIncidencias = () => {
     })
     const [misIncidencias, setMisIncidencias] = useState([])
     const [filtroEstado, setFiltroEstado] = useState('')
-    const [filtroFecha, setFiltroFecha] = useState('') 
-
-    console.log(incidencias)
+    const [filtroFecha, setFiltroFecha] = useState('')
 
     useEffect(() => {
         let userIncidencias = incidencias
-    
-        // Aplicar filtro por estado
+
         if (filtroEstado) {
             userIncidencias = userIncidencias.filter(incidencia => incidencia.estado === filtroEstado)
         }
-    
-        // Aplicar filtro por fecha
+
         if (filtroFecha) {
             const filtroFechaObj = new Date(filtroFecha)
             userIncidencias = userIncidencias.filter(incidencia => {
@@ -36,7 +34,7 @@ export const AllIncidencias = () => {
                 )
             })
         }
-    
+
         setMisIncidencias(userIncidencias)
     }, [incidencias, user.id, filtroEstado, filtroFecha])
 
@@ -44,7 +42,7 @@ export const AllIncidencias = () => {
     if (isError) return <p>Error al cargar incidencias</p>
 
     const handleEditar = (id, incidencia) => {
-        setEditando(id) // Establece el ID de la incidencia que se está editando
+        setEditando(id) 
         setFormData({
             asunto: incidencia.asunto,
             tipo: incidencia.tipo,
@@ -54,13 +52,11 @@ export const AllIncidencias = () => {
 
     const handleGuardar = (id) => {
         editarIncidenciaExistente(id, formData)
-        setEditando(null) // Termina la edición
+        setEditando(null) 
     }
 
-    const handleEliminar = (id) => {
-        if (window.confirm("¿Estás seguro de que quieres eliminar esta incidencia?")) {
-            eliminarIncidenciaExistente(id)
-        }
+    const handleVerDetalles = (id) => {
+        navigate(`/incidencias/${id}`) 
     }
 
     return (
@@ -85,7 +81,7 @@ export const AllIncidencias = () => {
                 />
 
                 <button
-                    onClick={() => { setFiltroEstado('') ; setFiltroFecha('') }}
+                    onClick={() => { setFiltroEstado(''); setFiltroFecha('') }}
                     className="bg-gray-500 text-white py-1 px-2 rounded"
                 >
                     Limpiar filtros
@@ -135,8 +131,8 @@ export const AllIncidencias = () => {
                                 month: '2-digit',
                                 year: 'numeric'
                             })}</td>
-                            <td className="py-2 px-4 flex gap-2">
-                                {editando === incidencia.id_incidencia ? (
+                            <td className="py-2 px-4 flex gap-2 justify-center items-center">
+                                {/* {editando === incidencia.id_incidencia ? (
                                     <button
                                         onClick={() => handleGuardar(incidencia.id_incidencia)}
                                         className="bg-green-500 text-white py-1 px-2 rounded"
@@ -150,12 +146,15 @@ export const AllIncidencias = () => {
                                     >
                                         Editar
                                     </button>
-                                )}
+                                )} */}
                                 <button
-                                    onClick={() => handleEliminar(incidencia.id_incidencia)}
-                                    className="bg-red-500 text-white py-1 px-2 rounded"
+                                    onClick={() => handleVerDetalles(incidencia.id_incidencia)}
+                                    className="bg-blue-500 text-white py-1 px-2 rounded"
                                 >
-                                    Eliminar
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
+                                        <path fillRule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z" clipRule="evenodd" />
+                                    </svg>
+
                                 </button>
                             </td>
                         </tr>

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { createContext, useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { crearIncidencia, incidenciasAll, editarIncidencia, eliminarIncidencia, editarStatus } from '../services/service'
@@ -82,7 +83,7 @@ const IncidenciaProvider = ({ children }) => {
             editarIncidenciaExistente,
             eliminarIncidenciaExistente,
             actualizarEstadoIncidencia,
-            mensaje
+            mensaje,
         }}>
             {children}
         </IncidenciaContext.Provider>

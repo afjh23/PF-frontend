@@ -5,7 +5,7 @@ import { AuthContext } from '../context/AuthContext'
 export const MisIncidencias = () => {
   const { incidencias, isLoading, isError, editarIncidenciaExistente, eliminarIncidenciaExistente, mensaje } = useContext(IncidenciaContext)
   const {user}  = useContext(AuthContext)
-  const [editando, setEditando] = useState(null) // Guardar qué incidencia se está editando
+  const [editando, setEditando] = useState(null) 
     const [formData, setFormData] = useState({
         asunto: '',
         tipo: '',
@@ -23,7 +23,7 @@ export const MisIncidencias = () => {
     if (isError) return <p>Error al cargar incidencias</p>
 
     const handleEditar = (id, incidencia) => {
-        setEditando(id) // Establece el ID de la incidencia que se está editando
+        setEditando(id) 
         setFormData({
             asunto: incidencia.asunto,
             tipo: incidencia.tipo,
@@ -33,7 +33,7 @@ export const MisIncidencias = () => {
 
     const handleGuardar = (id) => {
         editarIncidenciaExistente(id, formData)
-        setEditando(null) // Termina la edición
+        setEditando(null) 
     }
 
     const handleEliminar = (id) => {

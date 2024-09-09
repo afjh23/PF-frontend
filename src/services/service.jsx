@@ -23,7 +23,6 @@ export const infoUser = async () => {
 //USUARIOS
 
 export const usuariosAll = async () => {
-   console.log("aqui mismito")
     const token = localStorage.getItem('token')
     const response = await axios.get('http://localhost:3000/api/users/', {
         headers: {
@@ -51,6 +50,56 @@ export const incidenciasAll = async () => {
     const response = await axios.get('http://localhost:3000/api/incidencias/')
     return response.data
 
+}
+
+export const incidenciaById = async ({ id }) => {
+    const token = localStorage.getItem('token')
+    const response = await axios.get(`http://localhost:3000/api/incidencias/${id}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    })
+
+    const incidencias = response.data
+
+    if (incidencias.length > 0) {
+        const incidencia = {
+            id_incidencia: incidencias[0].id_incidencia,
+            id_usuario: incidencias[0].id_usuario,
+            asunto: incidencias[0].asunto,
+            tipo: incidencias[0].tipo,
+            descripcion: incidencias[0].descripcion,
+            imagen: incidencias[0].imagen,
+            estado: incidencias[0].estado,
+            fecha_reporte: incidencias[0].fecha_reporte,
+            comentarios: incidencias.map((item) => ({
+                id_comentarios: item.id_comentarios,
+                texto_comentario: item.texto_comentario,
+                fecha_creacion: item.comentario_fecha_creacion,
+                usuario: {
+                    id_usuario: item.comentario_id_usuario,
+                    nombre: item.nombre,
+                    cargo: item.usuario_cargo 
+                }
+            }))
+        }
+
+        return incidencia
+    }
+
+    return null
+}
+
+export const agregarComentario = async ( data) => {
+    const token = localStorage.getItem('token')
+    console.log(data)
+    const response = await axios.post('http://localhost:3000/api/comentarios/',data, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }}
+    )
+
+    return response.data
 }
 
 export const crearIncidencia = async (data) => {

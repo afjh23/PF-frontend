@@ -3,19 +3,19 @@ import { IncidenciaContext } from '../context/IncidenciaContext'
 
 export const EstadoIncidencias = () => {
     const { incidencias, isLoading, isError, actualizarEstadoIncidencia, mensaje } = useContext(IncidenciaContext)
-    const [editando, setEditando] = useState(null) // Guardar qué incidencia se está editando
+    const [editando, setEditando] = useState(null)
     const [formData, setFormData] = useState({
         asunto: '',
         tipo: '',
         descripcion: '',
-        estado: 'Pendiente' // Estado inicial
+        estado: 'Pendiente' 
     })
 
     if (isLoading) return <p>Cargando incidencias...</p>
     if (isError) return <p>Error al cargar incidencias</p>
 
     const handleEditar = (id, incidencia) => {
-        setEditando(id) // Establece el ID de la incidencia que se está editando
+        setEditando(id) 
         setFormData({
             asunto: incidencia.asunto,
             tipo: incidencia.tipo,
@@ -26,10 +26,10 @@ export const EstadoIncidencias = () => {
 
     const handleGuardar = (id) => {
         actualizarEstadoIncidencia(id, formData.estado)
-        setEditando(null) // Termina la edición
+        setEditando(null) 
     }
 
-    // Determina el color del estado basado en el valor del estado
+
     const getEstadoColor = (estado) => {
         console.log(estado)
         switch (estado) {

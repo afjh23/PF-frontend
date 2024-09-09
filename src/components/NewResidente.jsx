@@ -1,23 +1,23 @@
 
-import { useState, useContext } from 'react';
-import { UsuarioContext } from '../context/UsuarioContext';
+import { useState, useContext } from 'react'
+import { UsuarioContext } from '../context/UsuarioContext'
 
 export const NewResidente = () => {
-    const { crearNuevoUsuario, mensaje } = useContext(UsuarioContext);
+    const { crearNuevoUsuario, mensaje } = useContext(UsuarioContext)
     const [formData, setFormData] = useState({
         nombre: '',
         email: '',
         password: ''
-    });
+    })
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
+        setFormData({ ...formData, [e.target.name]: e.target.value })
+    }
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        crearNuevoUsuario(formData);
-    };
+        e.preventDefault()
+        crearNuevoUsuario(formData)
+    }
 
     return (
         <div className="p-4 max-w-lg mx-auto">
@@ -65,5 +65,5 @@ export const NewResidente = () => {
                 </button>
             </form>
         </div>
-    );
-}; 
+    )
+} 

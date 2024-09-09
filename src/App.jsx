@@ -14,6 +14,7 @@ import { MisIncidencias } from './pages/MisIncidencias.jsx'
 import { NewResidente } from './components/NewResidente.jsx'
 import { AllResidentes } from './pages/AllResidentes.jsx'
 import { UsuarioProvider } from './context/UsuarioContext.jsx'
+import IncidenciaDetalle from './components/IncidenciaDetalle.jsx'
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
                 <Route path="mis-incidencias" element={<MisIncidencias />} />
                 <Route path="new-residente" element={<NewResidente />} />
                 <Route path="all-residentes" element={<AllResidentes />} />
+                <Route path="incidencias/:id" element={<IncidenciaDetalle/>} />
               </Route>
               <Route path="*" element={<Navigate to="/login" />} />
             </Routes>

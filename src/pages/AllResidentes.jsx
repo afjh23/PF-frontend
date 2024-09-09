@@ -21,10 +21,7 @@ export const AllResidentes = () => {
                 
                
                 </Link>
-                
-                                
-                                   
-                                    
+            
             <table className="min-w-full bg-white border border-gray-300">
                 <thead>
                     <tr>
@@ -41,7 +38,7 @@ export const AllResidentes = () => {
                             <td className="py-2 px-4">{usuario.nombre+" "+usuario.apellido}</td>
                             <td className="py-2 px-4">{usuario.email}</td>
                             <td className="py-2 px-4 flex gap-2">
-                                {/* Aquí puedes agregar botones para editar o eliminar usuarios */}
+                               
                                 <button
                                     onClick={() => console.log(`Editar usuario ${usuario.id}`)}
                                     className="bg-yellow-500 text-white py-1 px-2 rounded"
